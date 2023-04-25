@@ -46,5 +46,7 @@ git clone https://github.com/shelsonx/simple_task_manager.git && cd simple_task_
    
 ## 3 - abrir o navegador e acessar o o link
     --> http://127.0.0.1:8080/tasks/
+   
+<img src="https://github.com/shelsonx/simple_task_manager/blob/master/image/task_manager.gif"/>
   
   
