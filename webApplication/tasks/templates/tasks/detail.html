@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block container %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Task Details #{{tasks.id}}</h4>
+            <h5 class="card-title"><strong>Title:</strong> {{tasks.title}}</h5>
+            <h6 class="card-title"><strong>Responsible:</strong> {{tasks.author}}</h6>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Type</dt>
+                <dd class="col-sm-9"> {{tasks.type.name}}</dd>
+                <dt class="col-sm-3">Priority</dt>
+                <dd class="col-sm-9"> {{tasks.priority.name}}</dd>
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9"> {{tasks.created|date:'d/m/Y'}}</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9"> {% if  tasks.completed == True %} closed {% else %} opened {% endif %}</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9"> {{tasks.description|safe}}</dd>
+            </dl>
+            <a href="{% url 'task-note-create' tasks.id %}" class="{% if tasks.completed %} disabled {% endif %} btn btn-danger">End task</a>
+            {% if tasks.author.id != user.id %}
+                    <a href="{% url 'tasks-detail' tasks.id %}?take-task=yes" class=" btn btn-warning" onblur="window.location.reload()">Take on task </a>
+            {% endif %}
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for note in notes %}
+                <tr>
+                    <td>{{note.author}}</td>
+                    <td>{{note.action|safe}}
+                        {% if forloop.counter == 1 and note.author.username == user.username %}
+                            <a href="#">edit</a>
+                        {% endif %}
+                    </td>
+                    <td>{{note.created|date:'d/m/Y h:i'}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+{% endblock %}

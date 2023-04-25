@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block container %}
+<table class="table">
+    <tr>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nº</th>
+                <th scope="col">Title</th>
+                <th scope="col">Type</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Created</th>
+                <!--<th scope="col" colspan="3">Type</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td><a a href="{% url 'tasks-detail' task.id%}" style="text-decoration: none; color: black;">
+                    {{task.id}}</a></td>
+                <td>{{task.title}}</td>
+                <td>{{task.type.name}}</td>
+                <td>{{task.priority.name}}</td>
+                <td>{{task.created|date:'d/m/Y'}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+{% if is_paginated %}
+    {% include "pagination.html" %}
+{% endif %}
+
+{% endblock %}
